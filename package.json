@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "chalk": "^2.3.0",
+    "express": "^4.16.2",
+    "mailgun-js": "^0.13.1"
+  }
+}
