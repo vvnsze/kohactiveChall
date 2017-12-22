@@ -1,7 +1,22 @@
 {
+  "name": "kohactiveChall",
+  "version": "1.0.0",
+  "description": "kohactive challenge answer",
+  "main": "index.js",
+  "repository": "https://github.com/vvnsze/kohactiveChall.git",
+  "author": "vivian sze",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server/index.js --watch"
+  },
   "dependencies": {
+    "@sendgrid/mail": "^6.1.4",
+    "body-parser": "^1.18.2",
     "chalk": "^2.3.0",
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
-    "mailgun-js": "^0.13.1"
+    "mailgun-js": "^0.13.1",
+    "nodemailer": "^4.4.1",
+    "nodemon": "^1.14.2"
   }
 }
