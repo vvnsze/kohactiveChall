@@ -18,10 +18,9 @@ exports.sendEmail = (req, res, next) => {
       return email;
     }
     const email = prepareEmailInfo(req.body);
-
     const mail = new MailComposer({
       from: email.senderName,
-      to: 'vvnsze@gmail.com',
+      to: email.toEmail,
       subject: email.subject,
       text: email.text,
       html: email.text,
@@ -32,12 +31,13 @@ exports.sendEmail = (req, res, next) => {
         to: email.toEmail,
         message: message.toString('ascii'),
       };
-      mailgun.messages().send(dataToSend, (error, body) => {
+      mailgun.messages().sendMime(dataToSend, (error, body) => {
         if (error) {
+          console.log(chalk.red('ERR: '), error)
           res.locals.emailInfo = email;
           next();
         } else {
-          res.send({ success: 'successfully sent' });
+          res.send({ success: 'mailgun successfully sent' });
         }
       });
     });

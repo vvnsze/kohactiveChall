@@ -1,9 +1,7 @@
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-const chalk = require('chalk');
 
 exports.sendEmail = (req, res) => {
-  console.log(chalk.magenta('typeof email: '), typeof(res.locals.emailInfo.toEmail));
   const email = res.locals.emailInfo;
   const msg = {
     to: email.toEmail,
