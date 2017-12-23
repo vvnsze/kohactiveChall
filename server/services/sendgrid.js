@@ -2,14 +2,29 @@ const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const chalk = require('chalk');
 
-exports.useSendgridEmail = (userInformation) => {
-  console.log(chalk.magenta('userInformation: '), userInformation)
+exports.sendEmail = (req, res) => {
+  console.log(chalk.magenta('typeof email: '), typeof(res.locals.emailInfo.toEmail));
+  const email = res.locals.emailInfo;
   const msg = {
-    to: 'vvnsze@gmail.com',
-    from: 'vvnsze@gmail.com',
-    subject: 'Sending with SendGrid is Fun',
-    text: 'and easy to do anywhere, even with Node.js',
-    html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+    to: email.toEmail,
+    from: email.senderName,
+    subject: email.subject,
+    text: email.text,
+    html: email.text,
   };
-  sgMail.send(msg);
+  if(typeof(email.toEmail) === 'object') {
+    sgMail.sendMultiple(msg)
+    .then(() => {
+      res.send({success: 'successfully sent emails; failed mailgun'})
+    }).catch((err) => {
+      res.send({error: 'error with backup email service'})
+    });
+  } else {
+    sgMail.send(msg)
+    .then(() => {
+      res.send({ success: 'successfully sent email; failed mailgun' });
+    }).catch((err) => {
+      res.send({ error: 'error with backup email service' });
+    });
+  }
 };
