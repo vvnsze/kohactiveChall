@@ -6,10 +6,10 @@ emails using Mailgun and Sendgrid as backup.
 `POST api/email` sends the email(s) to the recipients
 
 Post Data
-`toEmail` the field for recipients' email destinations
-`subject` the subject line
-`text` the message body
-`senderName` The sender's email address and name e.g. `jon snow <jonsnow@thewall.com>`
+- `toEmail` the field for recipients' email destinations
+- `subject` the subject line
+- `text` the message body
+- `senderName` The sender's email address and name e.g. `jon snow <jonsnow@thewall.com>`
 
 Example Post request. Replace `[TOKEN]` with your values:
 ```
@@ -21,9 +21,9 @@ curl --request POST \
 ```
 
 ## Setup
-clone repo
-`yarn install`
-`yarn start`
+- clone repo
+- `yarn install`
+- `yarn start`
 
 ## Environment Variables
 ```
