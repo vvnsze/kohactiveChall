@@ -2,19 +2,24 @@ const apiKey = process.env.MAILGUN_API_KEY;
 const domain = process.env.MAILGUN_DOMAIN;
 const MailComposer = require('nodemailer/lib/mail-composer');
 const mailgun = require('mailgun-js')({ apiKey, domain });
+const sendGrid = require('./sendgrid');
 const chalk = require('chalk');
 
-module.exports = {
-  sendConfirmationEmail: function confirmationEmail(user) {
-    const toEmail = 'vvnsze@gmail.com';
+
+exports.sendEmail = (req, res, next) => {
+  //need something to check for empty values
+    const toEmail = req.body.toEmail;
+    const subject = req.body.subject;
+    const text = req.body.text;
+    const senderName = req.body.senderName;
     const generateLink = () => (
-      '<b>Welcome to Kohactive!</b>'
-      );
+      req.body.text
+    );
 
     const mail = new MailComposer({
-      from: 'Kohactive <vvnsze@gmail.com>',
+      from: senderName,
       to: toEmail,
-      subject: 'Welcome To Kohactive',
+      subject: subject,
       text: generateLink(),
       html: generateLink(),
     });
@@ -26,10 +31,9 @@ module.exports = {
       };
       mailgun.messages().sendMime(dataToSend, (sendError, body) => {
         if (sendError) {
-          return sendError;
+          sendGrid.useSendGridEmail({ toEmail, subject, text, senderName });
         }
-        return body;
+        res.send({success: 'successfully sent'});
       });
     });
   }
-};
