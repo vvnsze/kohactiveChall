@@ -5,7 +5,7 @@ const mailgun = require('./services/mailgun');
 
 router.post('/email',[
 	mailgun.sendEmail,
-	sendGrid.sendEmail
+	sendGrid.sendEmail,
 ]);
 
 module.exports = router;

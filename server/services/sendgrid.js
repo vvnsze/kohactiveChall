@@ -10,7 +10,7 @@ exports.sendEmail = (req, res) => {
 		text: email.text,
 		html: email.text,
 	};
-	if(typeof(email.toEmail) === 'object') {
+	if (typeof(email.toEmail) === 'object') {
 		sgMail.sendMultiple(msg)
 			.then(() => {
 				res.send({ success: 'successfully sent emails; failed mailgun' });
